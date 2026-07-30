@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "ORIONIS — AI Security Platform"
+version = "1.0.0"
+id = "artifacts/orionis"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23733
+
+[services.development]
+run = "pnpm --filter @workspace/orionis run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/orionis", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/orionis/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23733"
+BASE_PATH = "/"
